@@ -1,0 +1,63 @@
+name: 今日の学習記録を作成
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  create-daily-log:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリの内容を取得
+        uses: actions/checkout@v4
+
+      - name: 今日の学習記録を作成
+        env:
+          TZ: Asia/Tokyo
+          ACTOR_ID: ${{ github.event.sender.id }}
+          ACTOR_NAME: ${{ github.actor }}
+        run: |
+          file_date=$(date +'%Y-%m-%d')
+          title_date=$(date +'%Y年%-m月%-d日')
+          file_path="log/${file_date}.md"
+
+          if [ -e "$file_path" ]; then
+            echo "${file_path} はすでに存在します。"
+            exit 0
+          fi
+
+          mkdir -p log
+
+          {
+            echo "# ${title_date}"
+            echo
+            echo "## 今日学習したこと"
+            echo
+            echo "-"
+            echo
+            echo "## 今日理解できたこと"
+            echo
+            echo "-"
+            echo
+            echo "## まだ理解できていないところ"
+            echo
+            echo "-"
+            echo
+            echo "## 次にやること"
+            echo
+            echo "-"
+            echo
+            echo "## 感想"
+            echo
+            echo "-"
+          } > "$file_path"
+
+          git config user.name "$ACTOR_NAME"
+          git config user.email "${ACTOR_ID}+${ACTOR_NAME}@users.noreply.github.com"
+
+          git add "$file_path"
+          git commit -m "${title_date}の学習記録を作成"
+          git push
