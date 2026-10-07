@@ -1,5 +1,5 @@
 ## 📚 プログラミング
-- [[Rails]]
+- [[Rails.md]]
 - [[Ruby]]
 - [[JavaScript]]
 - [[Database]]
