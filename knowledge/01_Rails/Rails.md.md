@@ -14,7 +14,7 @@
 - [[strong_parameters]]
 
 ## 🗄 Model
-- [[validation]]
+- [[validates]]
 - [[association]]
 
 ## 🎨 View

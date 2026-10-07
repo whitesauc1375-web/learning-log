@@ -92,7 +92,7 @@ permit(:email, :avatar)
 - [[params]]
 - [[Controller]]
 - [[Model]]
-- [[validation]]
+- [[validates]]
 
 
 
